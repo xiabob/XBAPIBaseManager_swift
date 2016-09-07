@@ -9,14 +9,33 @@
 import UIKit
 
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, XBAPIManagerCallBackDelegate, XBAPIManagerDataSource {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        let ds: GetAppInfo = GetAppInfo()
+        let ds: GetAppInfo = GetAppInfo(delegate: self)
+        ds.dataSource = self
         ds.loadData()
+//        ds.loadDataFromLocal()
+    }
+    
+    //MARK: - XBAPIManagerCallBackDelegate
+    func onManagerCallApiSuccess(manager: XBAPIBaseManager) {
+        print("\(manager) success")
+    }
+    
+    func onManagerCallApiFailed(manager: XBAPIBaseManager) {
+        print("\(manager) failed: \(manager.errorCode.message)")
+    }
+    
+    func onManagerCallCancled(manager: XBAPIBaseManager) {
+        print("\(manager) cancled")
+    }
+    
+    func parametersForApi(api: XBAPIBaseManager) -> [String : AnyObject]? {
+        return ["id": "907002334"]
     }
 
     override func didReceiveMemoryWarning() {
