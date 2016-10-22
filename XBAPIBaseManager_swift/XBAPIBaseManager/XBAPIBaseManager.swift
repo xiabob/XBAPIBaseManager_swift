@@ -9,10 +9,40 @@
 import Foundation
 import Alamofire
 
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
+fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l >= r
+  default:
+    return !(lhs < rhs)
+  }
+}
+
+
 //MARK: - XBAPIManagerDataSource
 
 public protocol XBAPIManagerDataSource: NSObjectProtocol {
-    func parametersForApi(api: XBAPIBaseManager) -> [String: AnyObject]?
+    func parametersForApi(_ api: XBAPIBaseManager) -> [String: AnyObject]?
 }
 
 
@@ -22,53 +52,53 @@ public protocol XBAPIManagerDataSource: NSObjectProtocol {
  *  接口请求结束回调协议
  */
 public protocol XBAPIManagerCallBackDelegate: NSObjectProtocol {
-    func onManagerCallApiSuccess(manager: XBAPIBaseManager)
-    func onManagerCallApiFailed(manager: XBAPIBaseManager)
-    func onManagerCallCancled(manager: XBAPIBaseManager)
+    func onManagerCallApiSuccess(_ manager: XBAPIBaseManager)
+    func onManagerCallApiFailed(_ manager: XBAPIBaseManager)
+    func onManagerCallCancled(_ manager: XBAPIBaseManager)
 }
 
 
-public typealias CompletionHandler = (manager: XBAPIBaseManager) -> Void
+public typealias CompletionHandler = (_ manager: XBAPIBaseManager) -> Void
 
 private var kXBLocalUserDefaultsName = "com.xiabob.apiManager.localCache"
 private var kXBDefaultMaxLocalDataCount = 500
 
 //MARK: - XBAPIBaseManager
-public class XBAPIBaseManager: NSObject {
+open class XBAPIBaseManager: NSObject {
     //MARK: - Properties
-    public weak var delegate: XBAPIManagerCallBackDelegate? //回调delegate
-    public weak var dataSource: XBAPIManagerDataSource?     //dataSource
+    open weak var delegate: XBAPIManagerCallBackDelegate? //回调delegate
+    open weak var dataSource: XBAPIManagerDataSource?     //dataSource
     
-    public var errorCode = Error() //错误码
-    public var rawResponseString: String? //返回的原始字符串数据
-    public var requestUrlString = "" //接口请求的url字符串
-    public var timeout: Double = 15 { //每个接口可以单独设置超时时间，默认是15秒
+    open var errorCode = Error() //错误码
+    open var rawResponseString: String? //返回的原始字符串数据
+    open var requestUrlString = "" //接口请求的url字符串
+    open var timeout: Double = 15 { //每个接口可以单独设置超时时间，默认是15秒
         didSet {
             manager.session.configuration.timeoutIntervalForRequest = timeout
         }
     }
     
     
-    private weak var apiManager: ManagerProtocol? //遵循ManagerProtocol的子类
-    private lazy var manager: Manager = { //Manager对象实例，执行具体的网络请求工作
-        let manager: Manager = Manager.sharedInstance
-        manager.session.configuration.HTTPAdditionalHeaders?.updateValue("application/json; charset=UTF-8", forKey: "Accept")
-        manager.session.configuration.HTTPAdditionalHeaders?.updateValue("application/json; charset=UTF-8", forKey: "Content-Type")
+    fileprivate weak var apiManager: ManagerProtocol? //遵循ManagerProtocol的子类
+    fileprivate lazy var manager: SessionManager = { //Manager对象实例，执行具体的网络请求工作
+        let manager: SessionManager = SessionManager.default
+        let _ = manager.session.configuration.httpAdditionalHeaders?.updateValue("application/json; charset=UTF-8", forKey: "Accept")
+        let _ = manager.session.configuration.httpAdditionalHeaders?.updateValue("application/json; charset=UTF-8", forKey: "Content-Type")
         manager.session.configuration.timeoutIntervalForRequest = self.timeout
         return manager
     }()
-    private var taskTable = Dictionary<String, NSURLSessionTask>() //请求表
-    private var currentRequest: Request? //当前请求
-    private var completionHandler: CompletionHandler? //请求结束回调closure对象
-    private lazy var userDefaults: NSUserDefaults? = { //用于缓存到本地
-        let userDefaults = NSUserDefaults(suiteName: kXBLocalUserDefaultsName)
+    fileprivate var taskTable = Dictionary<String, URLSessionTask>() //请求表
+    fileprivate var currentRequest: Request? //当前请求
+    fileprivate var completionHandler: CompletionHandler? //请求结束回调closure对象
+    fileprivate lazy var userDefaults: UserDefaults? = { //用于缓存到本地
+        let userDefaults = UserDefaults(suiteName: kXBLocalUserDefaultsName)
         if userDefaults?.dictionaryRepresentation().keys.count > kXBDefaultMaxLocalDataCount {
-            userDefaults?.removePersistentDomainForName(kXBLocalUserDefaultsName)
+            userDefaults?.removePersistentDomain(forName: kXBLocalUserDefaultsName)
         }
         return userDefaults
     }()
     
-    private var parseQueue = dispatch_queue_create("com.xiabob.apiManager.parseData", DISPATCH_QUEUE_CONCURRENT)
+    fileprivate var parseQueue = DispatchQueue(label: "com.xiabob.apiManager.parseData", attributes: DispatchQueue.Attributes.concurrent)
     
     //MARK: -  lifecycle
     override init() {
@@ -95,166 +125,171 @@ public class XBAPIBaseManager: NSObject {
     
     //MARK: - load data
     
-    public func loadData() {
+    open func loadData() {
         executeHttpRequest()
     }
     
-    public func loadData(completionHandler: CompletionHandler) {
+    open func loadData(_ completionHandler: @escaping CompletionHandler) {
         self.completionHandler = completionHandler
         loadData()
     }
     
-    public func loadDataFromLocal() {
+    open func loadDataFromLocal() {
         guard let apiManager = apiManager else {return}
         if apiManager.shouldCache {
             guard let data = getDataFromLocal() else {return callOnManagerCallApiSuccess()} //只是没有数据
             handleRespnseData(data)
         } else {
-            errorCode.code = .LoadLocalError
+            errorCode.code = .loadLocalError
             callOnManagerCallApiFailed()
         }
     }
     
-    public func loadDataFromLocal(completionHandler: CompletionHandler) {
+    open func loadDataFromLocal(_ completionHandler: @escaping CompletionHandler) {
         self.completionHandler = completionHandler
         loadDataFromLocal()
     }
     
     //MARK: - cancle operation
     
-    public func cancleRequests() {
+    open func cancleRequests() {
         for request in taskTable.values {
             request.cancel()
         }
         taskTable.removeAll()
     }
     
-    public func cancleCurrentRequest() {
+    open func cancleCurrentRequest() {
         if let currentRequest = currentRequest  {
             currentRequest.cancel()
-            taskTable.removeValueForKey(String(currentRequest.task.taskIdentifier))
+            taskTable.removeValue(forKey: String(describing: currentRequest.task?.taskIdentifier))
         }
     }
     
     //MARK: - private method
-    private func executeHttpRequest() {
+    fileprivate func executeHttpRequest() {
         guard let apiManager = apiManager else {return}
         //dataSource中设置参数其优先级更高
         let parameters = dataSource?.parametersForApi(self) ?? apiManager.parameters
         //转换为Alamofire的method
         let method = getMethod(apiManager.requestType)
         
-        currentRequest = manager.request(method, requestUrlString, parameters: parameters).responseData { (response: Response<NSData, NSError>) in
-            self.taskTable.removeValueForKey(String(self.currentRequest!.task.taskIdentifier))
+        currentRequest = manager.request(requestUrlString,
+                        method: method,
+                        parameters: parameters,
+                        encoding: URLEncoding.default,
+                        headers: nil).responseData(completionHandler: { (response: DataResponse<Data>) in
+            self.taskTable.removeValue(forKey: String(describing: self.currentRequest?.task?.taskIdentifier))
             
             if let data = response.result.value {
                 if apiManager.shouldCache {self.saveDataToLocal(data)}
                 self.handleRespnseData(data)
             } else {
-                self.handleError(response.result.error)
+                self.handleError(response.result.error as NSError?)
                 debugPrint(response.result.error)
             }
-        }
-        taskTable.updateValue(currentRequest!.task, forKey: String(currentRequest!.task.taskIdentifier))
+        })
+        
+        taskTable.updateValue(currentRequest!.task!, forKey: String(describing: currentRequest?.task?.taskIdentifier))
     }
     
-    private func handleRespnseData(data: NSData) {
+    fileprivate func handleRespnseData(_ data: Data) {
         guard let apiManager = apiManager else {return}
         
-        rawResponseString = String(data: data, encoding: NSUTF8StringEncoding)
+        rawResponseString = String(data: data, encoding: String.Encoding.utf8)
         
-        var result: AnyObject = data
+        var result: AnyObject = data as AnyObject
         if apiManager.isJsonData {
             do {
-                result = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+                result = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as AnyObject
             } catch {
                 onParseDataFail() //json数据解析出错
             }
         }
         
-        dispatch_async(parseQueue) {
+        parseQueue.async {
             //子线程中解析
             apiManager.parseResponseData(result)
-            dispatch_async(dispatch_get_main_queue(), { //解析完成，回到主线程
+            DispatchQueue.main.async(execute: { //解析完成，回到主线程
                 self.onCompleteParseData()
             })
         }
     }
     
-    private func handleError(error: NSError?) {
+    fileprivate func handleError(_ error: NSError?) {
         //取消请求特殊处理
         if error?.code == NSURLErrorCancelled {
-            errorCode.code = .Cancle
+            errorCode.code = .cancle
             return callOnManagerCallCancled()
         }
         
         if error?.code >= 500 && error?.code < 600 {
-            errorCode.code = .ServerError
+            errorCode.code = .serverError
             errorCode.message = error?.description
         } else {
-            errorCode.code = .HttpError
+            errorCode.code = .httpError
             errorCode.message = error?.description
         }
         callOnManagerCallApiFailed()
     }
     
-    private func getMethod(requestType: RequestType) -> Alamofire.Method {
+    fileprivate func getMethod(_ requestType: RequestType) -> HTTPMethod {
         switch requestType {
-        case .GET:
-            return .GET
-        case .POST:
-            return .POST
+        case .get:
+            return .get
+        case .post:
+            return .post
         }
     }
     
     //MARK: - local cache
     
-    private func saveDataToLocal(data: NSData) {
-        userDefaults?.setObject(data, forKey: requestUrlString)
+    fileprivate func saveDataToLocal(_ data: Data) {
+        userDefaults?.set(data, forKey: requestUrlString)
         userDefaults?.synchronize()
     }
     
-    private func getDataFromLocal() -> NSData? {
-        return userDefaults?.objectForKey(requestUrlString) as? NSData
+    fileprivate func getDataFromLocal() -> Data? {
+        return userDefaults?.object(forKey: requestUrlString) as? Data
     }
     
-    public func deleteLocalCache() {
-        userDefaults?.removePersistentDomainForName(kXBLocalUserDefaultsName)
+    open func deleteLocalCache() {
+        userDefaults?.removePersistentDomain(forName: kXBLocalUserDefaultsName)
     }
     
     //MARK:- 接口解析结束回调
     
-    private func onCompleteParseData() {
-        if errorCode.code == .Success {
+    fileprivate func onCompleteParseData() {
+        if errorCode.code == .success {
             callOnManagerCallApiSuccess()
         } else {
             callOnManagerCallApiFailed()
         }
     }
     
-    private func onParseDataFail() {
-        errorCode.code = .ParseError
+    fileprivate func onParseDataFail() {
+        errorCode.code = .parseError
         callOnManagerCallApiFailed()
     }
     
-    private func callOnManagerCallApiSuccess() {
+    fileprivate func callOnManagerCallApiSuccess() {
         delegate?.onManagerCallApiSuccess(self)
         if let completionHandler = completionHandler {
-            completionHandler(manager: self)
+            completionHandler(self)
         }
     }
     
-    private func callOnManagerCallApiFailed() {
+    fileprivate func callOnManagerCallApiFailed() {
         delegate?.onManagerCallApiFailed(self)
         if let completionHandler = completionHandler {
-            completionHandler(manager: self)
+            completionHandler(self)
         }
     }
     
-    private func callOnManagerCallCancled() {
+    fileprivate func callOnManagerCallCancled() {
         delegate?.onManagerCallCancled(self)
         if let completionHandler = completionHandler {
-            completionHandler(manager: self)
+            completionHandler(self)
         }
     }
 }

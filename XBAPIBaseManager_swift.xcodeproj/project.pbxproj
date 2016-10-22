@@ -240,13 +240,19 @@
 				TargetAttributes = {
 					742025D51D7EA5C500C54783 = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = WPR8JVVW9L;
+						LastSwiftMigration = 0800;
 					};
 					742025E91D7EA5C600C54783 = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = WPR8JVVW9L;
+						LastSwiftMigration = 0800;
 						TestTargetID = 742025D51D7EA5C500C54783;
 					};
 					742025F41D7EA5C600C54783 = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = WPR8JVVW9L;
+						LastSwiftMigration = 0800;
 						TestTargetID = 742025D51D7EA5C500C54783;
 					};
 				};
@@ -453,6 +459,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -490,6 +497,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 3.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -499,11 +507,13 @@
 			baseConfigurationReference = 0464C8604704107F880C1EF0 /* Pods-XBAPIBaseManager_swift.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = WPR8JVVW9L;
 				INFOPLIST_FILE = XBAPIBaseManager_swift/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.xiabob.XBAPIBaseManager-swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -512,11 +522,13 @@
 			baseConfigurationReference = 91B3AFAF92A17C08C2CE0A2E /* Pods-XBAPIBaseManager_swift.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = WPR8JVVW9L;
 				INFOPLIST_FILE = XBAPIBaseManager_swift/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.xiabob.XBAPIBaseManager-swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -524,10 +536,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = WPR8JVVW9L;
 				INFOPLIST_FILE = XBAPIBaseManager_swiftTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.xiabob.XBAPIBaseManager-swiftTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XBAPIBaseManager_swift.app/XBAPIBaseManager_swift";
 			};
 			name = Debug;
@@ -536,10 +550,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = WPR8JVVW9L;
 				INFOPLIST_FILE = XBAPIBaseManager_swiftTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.xiabob.XBAPIBaseManager-swiftTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XBAPIBaseManager_swift.app/XBAPIBaseManager_swift";
 			};
 			name = Release;
@@ -547,10 +563,12 @@
 		742026051D7EA5C600C54783 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = WPR8JVVW9L;
 				INFOPLIST_FILE = XBAPIBaseManager_swiftUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.xiabob.XBAPIBaseManager-swiftUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = XBAPIBaseManager_swift;
 			};
 			name = Debug;
@@ -558,10 +576,12 @@
 		742026061D7EA5C600C54783 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = WPR8JVVW9L;
 				INFOPLIST_FILE = XBAPIBaseManager_swiftUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.xiabob.XBAPIBaseManager-swiftUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = XBAPIBaseManager_swift;
 			};
 			name = Release;

@@ -9,7 +9,7 @@
 import Foundation
 
 public enum RequestType: String {
-    case GET, POST
+    case get, post
 }
 
 public protocol ManagerProtocol: NSObjectProtocol {
@@ -31,16 +31,16 @@ public protocol ManagerProtocol: NSObjectProtocol {
      
      - parameter data: 接口请求返回的结果
      */
-    func parseResponseData(data: AnyObject)
+    func parseResponseData(_ data: AnyObject)
 }
 
 //默认实现
 public extension ManagerProtocol {
     var baseUrl: String {return ""} //对于具体的APP而言，这个值一般是固定的
     var parameters: [String: AnyObject]? {return nil} //参数可有可无
-    var requestType: RequestType {return .GET} //默认是GET请求方式
+    var requestType: RequestType {return .get} //默认是GET请求方式
     var isJsonData: Bool {return true} //默认是json数据
     var shouldCache: Bool {return false}
     
-    func parseResponseData(data: AnyObject) { debugPrint("subclass not implement parseResponseData method ") } //甚至解析操作都可以延后至其他地方（比如vc中）
+    func parseResponseData(_ data: AnyObject) { debugPrint("subclass not implement parseResponseData method ") } //甚至解析操作都可以延后至其他地方（比如vc中）
 }

@@ -10,23 +10,24 @@ import Foundation
 
 public struct Error {
     public enum Code: Int {
-        case Success = 0 //请求成功，返回数据正确
-        case ParametersError //请求的参数错误
-        case LoadLocalError //加载本地缓存数据时出错
-        case HttpError //网络请求成功，返回出错
-        case ParseError //解析返回的数据出错
-        case Cancle //请求取消
-        case Timeout //请求超时
-        case NoNetWork //没有网络
-        case ServerError //服务器异常
+        case success = 0 //请求成功，返回数据正确
+        case fail //请求失败
+        case parametersError //请求的参数错误
+        case loadLocalError //加载本地缓存数据时出错
+        case httpError //网络请求成功，返回出错
+        case parseError //解析返回的数据出错
+        case cancle //请求取消
+        case timeout //请求超时
+        case noNetWork //没有网络
+        case serverError //服务器异常
     }
     
     /// 错误码
-    public var code = Code.Success
+    public var code = Code.success
     /// 具体错误信息
     public var message: String?
     
-    public init(code: Code = .Success, errorMessage message: String? = nil) {
+    public init(code: Code = .success, errorMessage message: String? = nil) {
         self.code = code
         self.message = message
     }

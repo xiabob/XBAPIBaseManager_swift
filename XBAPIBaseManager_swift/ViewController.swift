@@ -22,20 +22,20 @@ class ViewController: UIViewController, XBAPIManagerCallBackDelegate, XBAPIManag
     }
     
     //MARK: - XBAPIManagerCallBackDelegate
-    func onManagerCallApiSuccess(manager: XBAPIBaseManager) {
+    func onManagerCallApiSuccess(_ manager: XBAPIBaseManager) {
         print("\(manager) success")
     }
     
-    func onManagerCallApiFailed(manager: XBAPIBaseManager) {
+    func onManagerCallApiFailed(_ manager: XBAPIBaseManager) {
         print("\(manager) failed: \(manager.errorCode.message)")
     }
     
-    func onManagerCallCancled(manager: XBAPIBaseManager) {
+    func onManagerCallCancled(_ manager: XBAPIBaseManager) {
         print("\(manager) cancled")
     }
     
-    func parametersForApi(api: XBAPIBaseManager) -> [String : AnyObject]? {
-        return ["id": "907002334"]
+    func parametersForApi(_ api: XBAPIBaseManager) -> [String : AnyObject]? {
+        return ["id": "907002334" as AnyObject]
     }
 
     override func didReceiveMemoryWarning() {

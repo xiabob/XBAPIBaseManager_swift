@@ -11,10 +11,11 @@ import UIKit
 class GetAppInfo: XBAPIBaseManager, ManagerProtocol {
     var baseUrl: String {return "https://itunes.apple.com"}
     var path: String {return "/lookup"}
-    var parameters: [String : AnyObject]? {return ["id": "414478124"]}
+    var parameters: [String : AnyObject]? {return ["id": "414478124" as AnyObject]}
     var shouldCache: Bool {return true}
     
-    func parseResponseData(data: AnyObject) {
+    func parseResponseData(_ data: AnyObject) {
         print(data)
     }
+    
 }
