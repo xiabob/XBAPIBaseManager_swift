@@ -203,7 +203,7 @@ open class XBAPIBaseManager: NSObject {
             do {
                 result = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as AnyObject
             } catch {
-                onParseDataFail() //json数据解析出错
+                return onParseDataFail() //json数据解析出错
             }
         }
         
