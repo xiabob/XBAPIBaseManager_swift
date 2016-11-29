@@ -81,6 +81,7 @@ open class XBAPIBaseManager: NSObject {
     
     fileprivate weak var apiManager: ManagerProtocol? //遵循ManagerProtocol的子类
     fileprivate lazy var manager: SessionManager = { //Manager对象实例，执行具体的网络请求工作
+        //https://objccn.io/issue-5-4/
         let manager: SessionManager = SessionManager.default
         let _ = manager.session.configuration.httpAdditionalHeaders?.updateValue("application/json; charset=UTF-8", forKey: "Accept")
         let _ = manager.session.configuration.httpAdditionalHeaders?.updateValue("application/json; charset=UTF-8", forKey: "Content-Type")
