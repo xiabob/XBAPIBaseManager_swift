@@ -18,6 +18,7 @@
 		74AD27D91D7EAA7A00605311 /* ManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74AD27D81D7EAA7A00605311 /* ManagerProtocol.swift */; };
 		74AD27DB1D7EACFE00605311 /* XBAPIBaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74AD27DA1D7EACFE00605311 /* XBAPIBaseManager.swift */; };
 		74AD27DD1D7EB4F900605311 /* GetAppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74AD27DC1D7EB4F900605311 /* GetAppInfo.swift */; };
+		74E7656F1DEFFC7400818619 /* XBAPIChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E7656E1DEFFC7400818619 /* XBAPIChain.swift */; };
 		FB94D0BCE5A38F26F51A8F17 /* Pods_XBAPIBaseManager_swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59423F4249F18A836F360CB4 /* Pods_XBAPIBaseManager_swift.framework */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +59,7 @@
 		74AD27D81D7EAA7A00605311 /* ManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerProtocol.swift; sourceTree = "<group>"; };
 		74AD27DA1D7EACFE00605311 /* XBAPIBaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XBAPIBaseManager.swift; sourceTree = "<group>"; };
 		74AD27DC1D7EB4F900605311 /* GetAppInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetAppInfo.swift; sourceTree = "<group>"; };
+		74E7656E1DEFFC7400818619 /* XBAPIChain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XBAPIChain.swift; sourceTree = "<group>"; };
 		91B3AFAF92A17C08C2CE0A2E /* Pods-XBAPIBaseManager_swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XBAPIBaseManager_swift.release.xcconfig"; path = "Pods/Target Support Files/Pods-XBAPIBaseManager_swift/Pods-XBAPIBaseManager_swift.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -156,6 +158,7 @@
 				742026081D7EA70600C54783 /* Error.swift */,
 				74AD27D81D7EAA7A00605311 /* ManagerProtocol.swift */,
 				74AD27DA1D7EACFE00605311 /* XBAPIBaseManager.swift */,
+				74E7656E1DEFFC7400818619 /* XBAPIChain.swift */,
 			);
 			path = XBAPIBaseManager;
 			sourceTree = "<group>";
@@ -362,6 +365,7 @@
 				742026091D7EA70600C54783 /* Error.swift in Sources */,
 				74AD27DB1D7EACFE00605311 /* XBAPIBaseManager.swift in Sources */,
 				74AD27D91D7EAA7A00605311 /* ManagerProtocol.swift in Sources */,
+				74E7656F1DEFFC7400818619 /* XBAPIChain.swift in Sources */,
 				742025DA1D7EA5C500C54783 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
