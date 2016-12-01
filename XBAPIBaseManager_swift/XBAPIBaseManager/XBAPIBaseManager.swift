@@ -186,8 +186,12 @@ open class XBAPIBaseManager: NSObject {
                 if apiManager.shouldCache {self.saveDataToLocal(data)}
                 self.handleRespnseData(data)
             } else {
-                self.handleError(response.result.error as NSError?)
-                debugPrint(response.result.error)
+                var thisError: NSError?
+                if let error = response.result.error {
+                    thisError = error as NSError
+                    debugPrint(error)
+                }
+                self.handleError(thisError)
             }
         })
         
