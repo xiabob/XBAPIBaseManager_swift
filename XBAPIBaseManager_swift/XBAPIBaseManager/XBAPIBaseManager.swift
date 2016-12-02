@@ -42,7 +42,14 @@ fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 //MARK: - XBAPIManagerDataSource
 
 public protocol XBAPIManagerDataSource: NSObjectProtocol {
+    ///你可以在这里设置请求的参数，一旦设置，就会以它为准
     func parametersForApi(_ api: XBAPIBaseManager) -> [String: AnyObject]?
+    ///用于判断请求参数是否符合要求，默认情况下它是true，你不需要处理
+    func isValidParameters(_ api: XBAPIBaseManager) -> Bool
+}
+
+extension XBAPIManagerDataSource {
+    func isValidParameters(_ api: XBAPIBaseManager) -> Bool {return true}
 }
 
 
@@ -172,6 +179,11 @@ open class XBAPIBaseManager: NSObject {
         guard let apiManager = apiManager else {return}
         //dataSource中设置参数其优先级更高
         let parameters = dataSource?.parametersForApi(self) ?? apiManager.parameters
+        //判断设置的参数是否是有效地，没有dataSource或者没设置isValidParameters方法，默认都是有效地参数
+        if (dataSource?.isValidParameters(self) ?? true) == false {
+            return onParametersIsError()
+        }
+        
         //转换为Alamofire的method
         let method = getMethod(apiManager.requestType)
         
@@ -274,6 +286,13 @@ open class XBAPIBaseManager: NSObject {
     
     fileprivate func onParseDataFail() {
         errorCode.code = .parseError
+        errorCode.message = "解析json数据出错"
+        callOnManagerCallApiFailed()
+    }
+    
+    fileprivate func onParametersIsError() {
+        errorCode.code = .parametersError
+        errorCode.message = "请求的参数出错"
         callOnManagerCallApiFailed()
     }
     

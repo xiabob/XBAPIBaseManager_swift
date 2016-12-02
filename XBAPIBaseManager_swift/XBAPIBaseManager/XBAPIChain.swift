@@ -8,6 +8,10 @@
 
 import Foundation
 
+/**
+    chain.load(api1).next(api2).next(api3)，则api执行顺序是api1->api2->api3
+
+ */
 open class XBAPIChain: NSObject {
     
     private lazy var chainQueue: OperationQueue = {
@@ -47,6 +51,11 @@ open class XBAPIChain: NSObject {
         chainQueue.addOperation(blockOperation)
         
         return self
+    }
+    
+    ///取消之后所有的API调用（包括现在执行的）
+    open func cancleAPIs() {
+        chainQueue.cancelAllOperations()
     }
     
 }

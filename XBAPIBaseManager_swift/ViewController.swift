@@ -40,6 +40,10 @@ class ViewController: UIViewController, XBAPIManagerCallBackDelegate, XBAPIManag
             }
             .next(api: ds3) { manager in
                 debugPrint("\(manager)")
+                if manager.errorCode.code != .success {
+                    //前面的api调用出错，后面的不需要再调用了
+                    self.chain.cancleAPIs()
+                }
             }
             .next(api: ds4) { manager in
                 debugPrint("\(manager)")
@@ -59,6 +63,8 @@ class ViewController: UIViewController, XBAPIManagerCallBackDelegate, XBAPIManag
         print("\(manager) cancled")
     }
     
+    //MARK: - XBAPIManagerDataSource
+    
     func parametersForApi(_ api: XBAPIBaseManager) -> [String : AnyObject]? {
         if api == ds1 {
             return ["id": "907002334" as AnyObject]
@@ -71,6 +77,14 @@ class ViewController: UIViewController, XBAPIManagerCallBackDelegate, XBAPIManag
         }
         
         return ["id": "907002334" as AnyObject]
+    }
+    
+    func isValidParameters(_ api: XBAPIBaseManager) -> Bool {
+        if api == ds3 {
+            return false
+        }
+        
+        return true
     }
 
     override func didReceiveMemoryWarning() {
