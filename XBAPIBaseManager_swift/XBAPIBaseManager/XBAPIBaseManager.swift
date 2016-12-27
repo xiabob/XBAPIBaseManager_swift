@@ -243,6 +243,12 @@ open class XBAPIBaseManager: NSObject {
         if error?.code >= 500 && error?.code < 600 {
             errorCode.code = .serverError
             errorCode.message = error?.description
+        } else if error?.code == -1004 {
+            errorCode.code = .noNetWork
+            errorCode.message = "无法连接到服务器"
+        } else if error?.code == -1009 {
+            errorCode.code = .noNetWork
+            errorCode.message = "网络异常"
         } else {
             errorCode.code = .httpError
             errorCode.message = error?.description
