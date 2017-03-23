@@ -207,7 +207,9 @@ open class XBAPIBaseManager: NSObject {
             }
         })
         
-        taskTable.updateValue(currentRequest!.task!, forKey: String(describing: currentRequest?.task?.taskIdentifier))
+        if let task = currentRequest?.task {
+            taskTable.updateValue(task, forKey: String(describing: currentRequest?.task?.taskIdentifier))
+        }
     }
     
     fileprivate func handleRespnseData(_ data: Data) {
