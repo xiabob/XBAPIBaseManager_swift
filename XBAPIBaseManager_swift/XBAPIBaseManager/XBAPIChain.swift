@@ -10,6 +10,7 @@ import Foundation
 
 /**
     chain.load(api1).next(api2).next(api3)，则api执行顺序是api1->api2->api3
+    适用于采用block回调方式
 
  */
 open class XBAPIChain: NSObject {
