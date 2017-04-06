@@ -15,6 +15,7 @@
 		742025EF1D7EA5C600C54783 /* XBAPIBaseManager_swiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742025EE1D7EA5C600C54783 /* XBAPIBaseManager_swiftTests.swift */; };
 		742025FA1D7EA5C600C54783 /* XBAPIBaseManager_swiftUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742025F91D7EA5C600C54783 /* XBAPIBaseManager_swiftUITests.swift */; };
 		742026091D7EA70600C54783 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742026081D7EA70600C54783 /* Error.swift */; };
+		7477B27D1E96314700E2A426 /* XBAPILocalCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7477B27C1E96314700E2A426 /* XBAPILocalCache.swift */; };
 		74AD27D91D7EAA7A00605311 /* ManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74AD27D81D7EAA7A00605311 /* ManagerProtocol.swift */; };
 		74AD27DB1D7EACFE00605311 /* XBAPIBaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74AD27DA1D7EACFE00605311 /* XBAPIBaseManager.swift */; };
 		74AD27DD1D7EB4F900605311 /* GetAppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74AD27DC1D7EB4F900605311 /* GetAppInfo.swift */; };
@@ -56,6 +57,7 @@
 		742025F91D7EA5C600C54783 /* XBAPIBaseManager_swiftUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XBAPIBaseManager_swiftUITests.swift; sourceTree = "<group>"; };
 		742025FB1D7EA5C600C54783 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		742026081D7EA70600C54783 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		7477B27C1E96314700E2A426 /* XBAPILocalCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XBAPILocalCache.swift; sourceTree = "<group>"; };
 		74AD27D81D7EAA7A00605311 /* ManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerProtocol.swift; sourceTree = "<group>"; };
 		74AD27DA1D7EACFE00605311 /* XBAPIBaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XBAPIBaseManager.swift; sourceTree = "<group>"; };
 		74AD27DC1D7EB4F900605311 /* GetAppInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetAppInfo.swift; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 				74AD27D81D7EAA7A00605311 /* ManagerProtocol.swift */,
 				74AD27DA1D7EACFE00605311 /* XBAPIBaseManager.swift */,
 				74E7656E1DEFFC7400818619 /* XBAPIChain.swift */,
+				7477B27C1E96314700E2A426 /* XBAPILocalCache.swift */,
 			);
 			path = XBAPIBaseManager;
 			sourceTree = "<group>";
@@ -363,6 +366,7 @@
 				74AD27DD1D7EB4F900605311 /* GetAppInfo.swift in Sources */,
 				742025DC1D7EA5C500C54783 /* ViewController.swift in Sources */,
 				742026091D7EA70600C54783 /* Error.swift in Sources */,
+				7477B27D1E96314700E2A426 /* XBAPILocalCache.swift in Sources */,
 				74AD27DB1D7EACFE00605311 /* XBAPIBaseManager.swift in Sources */,
 				74AD27D91D7EAA7A00605311 /* ManagerProtocol.swift in Sources */,
 				74E7656F1DEFFC7400818619 /* XBAPIChain.swift in Sources */,

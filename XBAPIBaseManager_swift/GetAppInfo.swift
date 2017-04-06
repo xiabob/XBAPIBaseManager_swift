@@ -15,7 +15,7 @@ class GetAppInfo: XBAPIBaseManager, ManagerProtocol {
     var shouldCache: Bool {return true}
     
     func parseResponseData(_ data: AnyObject) {
-//        print(data)
+        print(rawResponseString!)
     }
     
 }
